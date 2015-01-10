@@ -1,0 +1,2 @@
+# Kumon-Program-Pt.-2-Worksheet-Data-Analyzing-Made-for-Fun-
+Program used in conjunction with my pt. 1 program to get certain statistics from recorded worksheet data including: total worksheets completed, total average, worksheets completed per subject, subject average, worksheet completed per level, and level averages. It also has a fairly user friendly UI. If you wish to download/install my program you can do so from this link: https://www.dropbox.com/s/cj4gjc2bxyvyky0/Kumon%20Classwork%20Recorder%20%26%20Statistics.msi?dl=0
