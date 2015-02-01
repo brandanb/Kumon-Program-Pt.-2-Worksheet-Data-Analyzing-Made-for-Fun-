@@ -77,11 +77,11 @@ int MainWindow::sort(QString* a, int n, QString na)
     return counter;
 }
 
-int MainWindow::sortsub(QString* a, int n, QString na, QString* subl, QString subb)
+int MainWindow::sortsub(QString* a, int n, QString na, QString* subl, QString subb) //finds duplicates of subjects
 {
     int yes = 1, i;
     int counter=0;
-    for (i = 0; i < n; ++i)
+    for (i = 0; i < n; ++i) //finds duplicates of subjects
     {
        if (a[i] == na)
        {
@@ -102,7 +102,7 @@ int MainWindow::sortsub(QString* a, int n, QString na, QString* subl, QString su
     return counter;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked() //total average
 {
     QString line, name;
     double realaverage, rounded;
@@ -114,15 +114,16 @@ void MainWindow::on_pushButton_clicked()
     listof =new QString[10000];
     int x=0;
 
-    name=ui->lineEdit->text();
+    name=ui->lineEdit->text(); //getting name from user input
 
-    QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+    QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
 
         do
         {
+        //puts each line into listof[] array, each line as a different element
         line = stream.readLine();
         listof[x] = line;
         // stream >> name >> month >> day >> year >> subject >> level >> apages >> total >> one >> two >> three >> four >> five >> six >> seven >> eight >> nine >> ten;
@@ -136,32 +137,29 @@ void MainWindow::on_pushButton_clicked()
     {
         QString Parsing;
         Parsing = listof[q];
-        qDebug() << "Hi" << Parsing;
         listt = Parsing.split(" ");
 
-        qDebug() << "Here: " << listt[1] << endl; //"name" in string
-
         reallist[q] = listt[0];
-        if (listt[0]==name)
+        if (listt[0]==name) //if the name is the one the user inputted...
         {
-            averagel=averagel+listt[7].toInt();
+            averagel=averagel+listt[7].toInt(); //...add it to the total
             qDebug() << averagel;
         }
 
     }
 
-    int Counter = sort(reallist,x,name);
+    int Counter = sort(reallist,x,name); //find how many times the name appears
     qDebug() << Counter;
 
-    realaverage=averagel/Counter;
+    realaverage=averagel/Counter; //divide total points by time the name appears
     qDebug() << realaverage;
-    rounded = floor(100*realaverage + .05) / 100;
-    QString averagestring = QString::number(rounded);
+    rounded = floor(100*realaverage + .05) / 100; //round decimal
+    QString averagestring = QString::number(rounded); //turn average into a string
 
-    QMessageBox::information(this,"Average Grade of Students Classwork","Average Grade of Students Classwork: " + averagestring);
+    QMessageBox::information(this,"Average Grade of Students Classwork","Average Grade of Students Classwork: " + averagestring); //output average
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked() //number of classworks completed
 {
     QString line, name;
     QString *reallist;
@@ -171,13 +169,13 @@ void MainWindow::on_pushButton_2_clicked()
     listof =new QString[10000];
     int x=0;
 
-    name=ui->lineEdit->text();
+    name=ui->lineEdit->text(); //getting name from entered user input
 
-    QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+    QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-
+        //putting each line of text into an array
         do
         {
         line = stream.readLine();
@@ -186,23 +184,24 @@ void MainWindow::on_pushButton_2_clicked()
         } while(!line.isNull());
     }
 
-    for (int q=x-2; q>=0; q--) //for (int q=x; q>=0; q--)
+    for (int q=x-2; q>=0; q--)
     {
+        //getting the name of each line
         QString Parsing;
         Parsing = listof[q];
         listt = Parsing.split(" ");
         reallist[q] = listt[0];
     }
 
-    int Counter = sort(reallist,x,name);
+    int Counter = sort(reallist,x,name); //finds duplicate names
 
-    QString CounterString = QString::number(Counter);
+    QString CounterString = QString::number(Counter); //turns the counter number into a string
 
     qDebug() << Counter;
-    QMessageBox::information(this,"Total Classworks Completed","Total Classwork Completed: " + CounterString);
+    QMessageBox::information(this,"Total Classworks Completed","Total Classwork Completed: " + CounterString); //displays number of classworks
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_pushButton_3_clicked() //classworks completed per subject
 {
     QString line, name, sub1, sub2;
     QString *reallist;
@@ -214,15 +213,15 @@ void MainWindow::on_pushButton_3_clicked()
     listof =new QString[10000];
     int x=0;
 
-    name=ui->lineEdit->text();
+    name=ui->lineEdit->text(); //get name from user input
 
 
-    QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+    QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
 
-        do
+        do //putting each line into a element of listof[] array
         {
         line = stream.readLine();
         listof[x] = line;
@@ -230,13 +229,13 @@ void MainWindow::on_pushButton_3_clicked()
         } while(!line.isNull());
     }
 
-    for (int q=x-2; q>=0; q--) //for (int q=x; q>=0; q--)
+    for (int q=x-2; q>=0; q--) //split lines into each data input
     {
         QString Parsing;
         Parsing = listof[q];
         listt = Parsing.split(" ");
-        reallist[q] = listt[0];
-        sublist[q] = listt[4];
+        reallist[q] = listt[0]; //name
+        sublist[q] = listt[4]; //subject
     }
     sub1 = "Math";
     int Counter1 = sortsub(reallist,x,name,sublist,sub1); //add variable sub
@@ -250,10 +249,10 @@ void MainWindow::on_pushButton_3_clicked()
 
     qDebug() << Counter1;
     qDebug() << Counter2;
-    QMessageBox::information(this,"Total Classworks Completed Per Subject","Total Math Classwork: " + CounterString1 + "\n" + "Total Reading Classwork: " + CounterString2 + "\n");
+    QMessageBox::information(this,"Total Classworks Completed Per Subject","Total Math Classwork: " + CounterString1 + "\n" + "Total Reading Classwork: " + CounterString2 + "\n"); //output number of subjects
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_pushButton_4_clicked() //subject average
 {
     double realmathavg, realreadingavg;
     double averagemath = 0;
@@ -271,12 +270,12 @@ void MainWindow::on_pushButton_4_clicked()
     name=ui->lineEdit->text();
 
 
-    QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+    QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
 
-        do
+        do //make each line into a element of array listof
         {
         line = stream.readLine();
         listof[x] = line;
@@ -289,40 +288,40 @@ void MainWindow::on_pushButton_4_clicked()
         QString Parsing;
         Parsing = listof[q];
         listt = Parsing.split(" ");
-        reallist[q] = listt[0];
-        sublist[q] = listt[4];
-        if (listt[0]==name && listt[4]=="Math")
+        reallist[q] = listt[0]; //name
+        sublist[q] = listt[4]; //subject
+        if (listt[0]==name && listt[4]=="Math") //if the name has the subject
         {
-            averagemath=averagemath+listt[7].toInt();
+            averagemath=averagemath+listt[7].toInt(); //total character in data
             qDebug() << "Math Avg: " << averagemath;
         }
 
-        if (listt[0]==name && listt[4]=="Reading")
+        if (listt[0]==name && listt[4]=="Reading") //if the name has the subject
         {
-            averagereading=averagereading+listt[7].toInt();
+            averagereading=averagereading+listt[7].toInt(); //total character in data
             qDebug() << "Read Avg: " << averagereading;
         }
     }
 
 
     sub1 = "Math";
-    int Counter1 = sortsub(reallist,x,name,sublist,sub1); //add variable sub
-    realmathavg = averagemath/Counter1;
+    int Counter1 = sortsub(reallist,x,name,sublist,sub1); //count duplicates
+    realmathavg = averagemath/Counter1; //calculate average
 
     sub2 = "Reading";
-    int Counter2 = sortsub(reallist,x,name,sublist,sub2);
-    realreadingavg = averagereading/Counter2;
+    int Counter2 = sortsub(reallist,x,name,sublist,sub2); //count duplicates
+    realreadingavg = averagereading/Counter2; //calculate average
 
-    double rounded1 = floor(100*realmathavg + .05) / 100;
-    QString averagemathstring = QString::number(rounded1);
+    double rounded1 = floor(100*realmathavg + .05) / 100; //round average
+    QString averagemathstring = QString::number(rounded1); //turn average into string
     qDebug() << "Counter1: " << Counter1;
     if (Counter1 == 0)
     {
         averagemathstring = "None Completed";
     }
 
-    double rounded2 = floor(100*realreadingavg + .05) / 100;
-    QString averagereadingstring = QString::number(rounded2);
+    double rounded2 = floor(100*realreadingavg + .05) / 100; //round
+    QString averagereadingstring = QString::number(rounded2); //turn into string
     qDebug() << "Counter2: " << Counter2;
     if (Counter2 == 0)
     {
@@ -331,10 +330,10 @@ void MainWindow::on_pushButton_4_clicked()
 
     qDebug() << rounded1;
     qDebug() << rounded2;
-    QMessageBox::information(this,"Subject Based Averages","Math Classwork Average: " + averagemathstring + "\n" + "Reading Classwork Average: " + averagereadingstring + "\n");
+    QMessageBox::information(this,"Subject Based Averages","Math Classwork Average: " + averagemathstring + "\n" + "Reading Classwork Average: " + averagereadingstring + "\n"); //output in message box
 }
 
-void MainWindow::on_pushButton_6_clicked()
+void MainWindow::on_pushButton_6_clicked() //classworks completed per level
 {
     int element1=0;
     int element2=0;
@@ -399,16 +398,16 @@ void MainWindow::on_pushButton_6_clicked()
         int i=0;
         int b=0;
 
-        name=ui->lineEdit->text();
+        name=ui->lineEdit->text(); //user input for name
 
 
-        QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+        QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream stream(&file);
 
             do
-            {
+            { //put each line into a element in array listof[]
             line = stream.readLine();
             listof[x] = line;
             x++;
@@ -822,7 +821,7 @@ void MainWindow::on_pushButton_5_clicked()
     name=ui->lineEdit->text();
 
 
-    QFile file("C:/Program Files (x86)/BrandanApplications/Kumon Classwork Recording/KumonWrite.txt");
+    QFile file("C:/Users/Brandan/Desktop/KumonWrite.txt");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
